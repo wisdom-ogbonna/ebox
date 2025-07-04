@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function NotFound() {
-    return (
-        <>
-            <div className="h-[100vh] flex flex-col justify-center items-center">
-                <div className="grid gap-4 justify-center">
-                    <h1 className="text-4xl font-bold">ERROR 404</h1>
-                    <p className="font-semibold text-gray-500 italic">PAGE NOT FOUND</p>
-                    <Link to="/dashboard"><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg shadow-sm shadow-black">GOT TO DASHBOARD</button></Link>
-                    <p>&copy; EBOX | <span>ALL RIGHTS RESERVED.</span></p>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <div className="h-screen flex items-center justify-center bg-gray-100 text-gray-900 p-6">
+      <div className="max-w-md w-full rounded-xl backdrop-blur bg-white/30 border border-white/20 shadow-lg p-8 text-center space-y-6">
+        <h1 className="text-5xl font-extrabold text-black">ERROR 404</h1>
+        <p className="text-gray-700 italic font-medium">Page not found</p>
+        
+        <Link to="/dashboard">
+          <button className="flex items-center justify-center place-self-center-safe gap-2 bg-black text-white px-5 py-2 rounded-lg shadow hover:bg-gray-800 transition my-7">
+            <FaArrowLeft /> Go to Dashboard
+          </button>
+        </Link>
+        
+        <p className="text-xs text-gray-600">
+          &copy; {new Date().getFullYear()} EBOX | <span>All rights reserved.</span>
+        </p>
+      </div>
+    </div>
+  );
 }

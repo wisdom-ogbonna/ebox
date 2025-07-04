@@ -106,7 +106,7 @@ export default function Login() {
                         </label>
                     </div>
                     <div className="grid">
-                        <button className="border-2 bg-gray-900 hover:black border-gray-200 text-white rounded-md p-2 text-2xl font-bold" type="submit">
+                        <button className="border-2 bg-gray-900 hover:bg-black border-gray-200 text-white rounded-md p-2 text-2xl font-bold" type="submit">
                             LOG IN
                         </button>
                     </div>
