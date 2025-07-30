@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaArrowLeft,
@@ -26,13 +27,17 @@ import {
 } from "react-icons/fa";
 
 export default function Seller() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 p-6">
       {/* Header */}
       <header className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-3xl font-bold">Seller Dashboard</h2>
-          <p className="text-sm text-gray-600">Your control center for managing sales, inventory, and performance.</p>
+          <p className="text-sm text-gray-600">
+            Your control center for managing sales, inventory, and performance.
+          </p>
         </div>
         <Link
           to="/dashboard"
@@ -44,9 +49,22 @@ export default function Seller() {
 
       {/* Quick Actions */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <GlassCard icon={<FaPlus />} title="Add New Product" desc="Upload new inventory and manage listings." />
-        <GlassCard icon={<FaClipboardList />} title="View Orders" desc="Track all recent and pending orders." />
-        <GlassCard icon={<FaChartBar />} title="Sales Report" desc="Analyze revenue trends and performance." />
+        <GlassCard
+          icon={<FaPlus />}
+          title="Add New Product"
+          desc="Upload new inventory and manage listings."
+          onClick={() => setShowModal(true)}
+        />
+        <GlassCard
+          icon={<FaClipboardList />}
+          title="View Orders"
+          desc="Track all recent and pending orders."
+        />
+        <GlassCard
+          icon={<FaChartBar />}
+          title="Sales Report"
+          desc="Analyze revenue trends and performance."
+        />
       </section>
 
       {/* Management Sections */}
@@ -102,18 +120,91 @@ export default function Seller() {
           </table>
         </div>
       </section>
+
+      {/* Modal */}
+      {showModal && <CreateProductModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }
 
-/** GlassCard component for DRY layout */
-function GlassCard({ icon, title, desc }) {
+/** GlassCard component */
+function GlassCard({ icon, title, desc, onClick }) {
   return (
-    <div className="rounded-lg backdrop-blur bg-white/30 border border-white/20 shadow-lg p-5 flex items-center gap-4 transition hover:bg-white/40">
+    <div
+      onClick={onClick}
+      className="cursor-pointer rounded-lg backdrop-blur bg-white/30 border border-white/20 shadow-lg p-5 flex items-center gap-4 transition hover:bg-white/40"
+    >
       <div className="text-black text-2xl">{icon}</div>
       <div>
         <h3 className="text-lg font-bold">{title}</h3>
         <p className="text-sm text-gray-700">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+/** Create Product Modal component */
+function CreateProductModal({ onClose }) {
+  return (
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+      <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl relative">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-3xl"
+        >
+          &times;
+        </button>
+        <h2 className="text-xl font-bold mb-4">Create New Product</h2>
+        <form className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium">Product Name</label>
+            <input
+              type="text"
+              className="w-full border rounded px-3 py-2 text-sm"
+              placeholder="e.g., Bluetooth Headset"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Product Description</label>
+            <textarea
+              rows="3"
+              className="w-full border rounded px-3 py-2 text-sm"
+              placeholder="e.g., This is a high-quality Bluetooth headset with noise cancellation."
+            ></textarea>
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Product Type</label>
+            <select className="w-full border rounded px-3 py-2 text-sm">
+              <option value="">Select Type</option>
+              <option value="physical">Physical</option>
+              <option value="digital">Digital</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Price ($)</label>
+            <input
+              type="number"
+              className="w-full border rounded px-3 py-2 text-sm"
+              placeholder="e.g., 29.99"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Stock Quantity</label>
+            <input
+              type="number"
+              className="w-full border rounded px-3 py-2 text-sm"
+              placeholder="e.g., 100"
+            />
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 text-sm"
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

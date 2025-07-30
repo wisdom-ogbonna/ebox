@@ -100,7 +100,7 @@ export default function Dashboard() {
   );
 }
 
-/** Sidebar Link helper */
+/* Sidebar Link helper */
 function navLink(to, icon, label, isOpen) {
   return (
     <Link
