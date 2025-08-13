@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -25,6 +26,18 @@ export default function Seller() {
   useEffect(() => {
     fetchProducts();
   }, []);
+=======
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaArrowLeft, FaPlus, FaClipboardList } from "react-icons/fa";
+import CreateProductModal from "../Components/CreateProductModal";
+import { useProducts } from "../context/ProductsContext";
+
+export default function Seller() {
+  const [showModal, setShowModal] = useState(false);
+  const { products, addProduct } = useProducts();
+  const navigate = useNavigate();
+>>>>>>> 077787f2c7a40e95117bbe97b1dcd96307084187
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 p-6">
@@ -54,9 +67,11 @@ export default function Seller() {
         />
         <GlassCard
           icon={<FaClipboardList />}
-          title="View Orders"
-          desc="Track all recent and pending orders."
+          title="View Products"
+          desc="See all products you have added."
+          onClick={() => navigate("/products")}
         />
+<<<<<<< HEAD
         <GlassCard
           icon={<FaChartBar />}
           title="Sales Report"
@@ -118,11 +133,21 @@ export default function Seller() {
 
       {/* Modal */}
       {showModal && <CreateProductModal onClose={() => { setShowModal(false); fetchProducts(); }} />}
+=======
+      </section>
+
+      {/* Modal */}
+      {showModal && (
+        <CreateProductModal
+          onClose={() => setShowModal(false)}
+          onCreate={addProduct}
+        />
+      )}
+>>>>>>> 077787f2c7a40e95117bbe97b1dcd96307084187
     </div>
   );
 }
 
-/** GlassCard component */
 function GlassCard({ icon, title, desc, onClick }) {
   return (
     <div
@@ -136,6 +161,7 @@ function GlassCard({ icon, title, desc, onClick }) {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
 
 /** Create Product Modal */
@@ -221,3 +247,6 @@ function CreateProductModal({ onClose }) {
     </div>
   );
 }
+=======
+}
+>>>>>>> 077787f2c7a40e95117bbe97b1dcd96307084187
