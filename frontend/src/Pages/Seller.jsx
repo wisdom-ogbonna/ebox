@@ -1,33 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  FaArrowLeft,
-  FaPlus,
-  FaClipboardList,
-  FaChartBar,
-  FaCogs,
-  FaBoxes,
-  FaMoneyBill,
-  FaPercent,
-  FaTags,
-  FaExclamationTriangle,
-  FaUpload,
-  FaStar,
-  FaComments,
-  FaHistory,
-  FaBell,
-  FaUserCircle,
-  FaTruck,
-  FaUndo,
-  FaGlobe,
-  FaCoins,
-  FaPaperPlane,
-  FaUsers,
-  FaChartPie,
+  FaArrowLeft, FaPlus, FaClipboardList, FaChartBar, FaCogs, FaBoxes,
+  FaMoneyBill, FaPercent, FaTags, FaExclamationTriangle, FaUpload, FaStar,
+  FaComments, FaHistory, FaBell, FaUserCircle, FaTruck, FaUndo, FaGlobe,
+  FaCoins, FaPaperPlane, FaUsers, FaChartPie
 } from "react-icons/fa";
+import axios from "axios";
 
 export default function Seller() {
   const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  // Fetch products from backend
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get("http://127.0.0.1:8000/api/products");
+      setProducts(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching products:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 p-6">
@@ -90,7 +87,7 @@ export default function Seller() {
         <GlassCard icon={<FaCogs />} title="Advanced Settings" desc="Integrations, API keys, and webhooks." />
       </section>
 
-      {/* Placeholder Product Table */}
+      {/* Product Table */}
       <section className="mt-12">
         <h3 className="text-xl font-semibold mb-4">My Products</h3>
         <div className="overflow-x-auto rounded-lg backdrop-blur bg-white/30 border border-white/20 shadow-lg">
@@ -102,27 +99,25 @@ export default function Seller() {
                 <th className="px-4 py-2">Price</th>
                 <th className="px-4 py-2">Stock</th>
                 <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody className="backdrop-blur bg-white/20">
-              <tr className="border-b border-white/30">
-                <td className="px-4 py-2">1</td>
-                <td className="px-4 py-2">Black Wireless Mouse</td>
-                <td className="px-4 py-2">$19.99</td>
-                <td className="px-4 py-2">56</td>
-                <td className="px-4 py-2">Active</td>
-                <td className="px-4 py-2">
-                  <button className="text-sm text-blue-600 hover:underline">Edit</button>
-                </td>
-              </tr>
+              {products.map((p, i) => (
+                <tr key={p._id || i} className="border-b border-white/30">
+                  <td className="px-4 py-2">{i + 1}</td>
+                  <td className="px-4 py-2">{p.name}</td>
+                  <td className="px-4 py-2">${p.price}</td>
+                  <td className="px-4 py-2">{p.stock}</td>
+                  <td className="px-4 py-2">{p.status || "Active"}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </section>
 
       {/* Modal */}
-      {showModal && <CreateProductModal onClose={() => setShowModal(false)} />}
+      {showModal && <CreateProductModal onClose={() => { setShowModal(false); fetchProducts(); }} />}
     </div>
   );
 }
@@ -131,7 +126,7 @@ export default function Seller() {
 function GlassCard({ icon, title, desc, onClick }) {
   return (
     <div
-      onClick={onClick}
+      onClick={() => onClick && onClick()}
       className="cursor-pointer rounded-lg backdrop-blur bg-white/30 border border-white/20 shadow-lg p-5 flex items-center gap-4 transition hover:bg-white/40"
     >
       <div className="text-black text-2xl">{icon}</div>
@@ -143,8 +138,33 @@ function GlassCard({ icon, title, desc, onClick }) {
   );
 }
 
-/** Create Product Modal component */
+/** Create Product Modal */
 function CreateProductModal({ onClose }) {
+  const [product, setProduct] = useState({
+    name: "",
+    description: "",
+    type: "",
+    price: "",
+    stock: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/products", product);
+      alert("✅ Product added successfully!");
+      onClose();
+    } catch (err) {
+      alert("❌ Failed to add product. Check console.");
+      console.error(err);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl relative">
@@ -155,52 +175,44 @@ function CreateProductModal({ onClose }) {
           &times;
         </button>
         <h2 className="text-xl font-bold mb-4">Create New Product</h2>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium">Product Name</label>
-            <input
-              type="text"
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="e.g., Bluetooth Headset"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Product Description</label>
-            <textarea
-              rows="3"
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="e.g., This is a high-quality Bluetooth headset with noise cancellation."
-            ></textarea>
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Product Type</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              <option value="">Select Type</option>
-              <option value="physical">Physical</option>
-              <option value="digital">Digital</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Price ($)</label>
-            <input
-              type="number"
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="e.g., 29.99"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Stock Quantity</label>
-            <input
-              type="number"
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="e.g., 100"
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {["name", "description", "type", "price", "stock"].map((field) => (
+            <div key={field}>
+              <label className="block text-sm font-medium capitalize">{field}</label>
+              {field === "description" ? (
+                <textarea
+                  name={field}
+                  value={product[field]}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  required
+                />
+              ) : field === "type" ? (
+                <select
+                  name={field}
+                  value={product[field]}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  required
+                >
+                  <option value="">Select Type</option>
+                  <option value="physical">Physical</option>
+                  <option value="digital">Digital</option>
+                </select>
+              ) : (
+                <input
+                  name={field}
+                  value={product[field]}
+                  onChange={handleChange}
+                  type={field === "price" || field === "stock" ? "number" : "text"}
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  required
+                />
+              )}
+            </div>
+          ))}
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 text-sm"
-            >
+            <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 text-sm">
               Add Product
             </button>
           </div>
