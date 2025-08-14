@@ -7,8 +7,8 @@ import Seller from './Pages/Seller';
 import Buyer from './Pages/Buyer';
 import AddProduct from './Pages/AddProduct';
 import NotFound from './Pages/Notfound';
+import ProductsPage from './Pages/ProductsPage';
 import { ProductsProvider } from "./context/ProductsContext";
-import ProductsPage from './Pages/ProductsPage'; // new products page
 
 export default function App() {
   return (
@@ -19,6 +19,7 @@ export default function App() {
         <Route path="/seller" element={<Seller />} />
         <Route path="/buyer" element={<Buyer />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
