@@ -24,4 +24,18 @@ class ProductController extends Controller
             'data'    => $product
         ], 201);
     }
+
+        // Get all products
+    public function index()
+    {
+        $products = Product::all();
+        return response()->json($products);
+    }
+
+    // Get a single product by ID
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+    }
 }

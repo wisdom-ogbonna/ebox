@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products', [ProductController::class, 'index']); // all products
+Route::get('/products/{id}', [ProductController::class, 'show']); // single product
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
