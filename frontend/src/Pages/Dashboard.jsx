@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaBars,
@@ -12,9 +12,22 @@ import {
   FaSignOutAlt,
   FaUserAlt,
 } from "react-icons/fa";
+import EboxzLogo from "../Components/EboxzLogo";
+import Footer from "../Components/Footer";
 
 export default function Dashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+
+      setSidebarOpen(window.innerWidth >= 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-gray-900">
@@ -25,9 +38,12 @@ export default function Dashboard() {
         }`}
       >
         <div className="flex items-center justify-between px-4 py-5 border-b border-white/20">
-          <h1 className="text-xl font-bold">{isSidebarOpen ? "E-Box" : "EB"}</h1>
+          <h1 className="text-xl font-bold lg:block">
+            {isSidebarOpen ? "E-Box" : "EB"}
+          </h1>
+
           <button
-            className="text-white text-2xl focus:outline-none"
+            className="text-white text-2xl focus:outline-none lg:block"
             onClick={() => setSidebarOpen(!isSidebarOpen)}
             aria-label="Toggle Sidebar"
           >
@@ -36,7 +52,7 @@ export default function Dashboard() {
         </div>
         <nav className="flex flex-col space-y-1 px-2 mt-4">
           {navLink("/dashboard", <FaTachometerAlt />, "Dashboard", isSidebarOpen)}
-          {navLink("/super-admin", <FaUserShield />, "Super Admin", isSidebarOpen)}
+          {navLink("/admin", <FaUserShield />, "Admin Panel", isSidebarOpen)}
           {navLink("/seller", <FaStore />, "Seller Panel", isSidebarOpen)}
           {navLink("/buyer", <FaUsers />, "Buyer Panel", isSidebarOpen)}
           {navLink("/products", <FaBox />, "Products", isSidebarOpen)}
@@ -53,7 +69,10 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
         <header className="mb-8">
-          <h2 className="text-3xl font-bold">E-Box Dashboard</h2>
+          <div className="flex flex-col mb-6 items-center space-x-2">
+            <EboxzLogo className="w-50 h-20" />
+            <h2 className="text-3xl font-bold">Dashboard</h2>
+          </div>
           <p className="text-sm text-gray-600">
             Welcome to your unified control panel.
           </p>
@@ -95,12 +114,12 @@ export default function Dashboard() {
             </table>
           </div>
         </section>
+        <Footer />
       </main>
     </div>
   );
 }
 
-/* Sidebar Link helper */
 function navLink(to, icon, label, isOpen) {
   return (
     <Link
@@ -109,12 +128,11 @@ function navLink(to, icon, label, isOpen) {
       className="flex items-center space-x-3 py-2 hover:bg-gray-800 rounded px-2"
     >
       {icon}
-      {isOpen && <span>{label}</span>}
+      {isOpen && <span className="lg:inline">{label}</span>}
     </Link>
   );
 }
 
-/** GlassCard Component */
 function GlassCard({ title, desc }) {
   return (
     <div className="rounded-lg bg-white/30 border border-white/20 shadow-lg p-5 transition hover:bg-white/40">

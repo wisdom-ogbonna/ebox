@@ -13,12 +13,13 @@ import {
   FaStar,
   FaGift,
 } from "react-icons/fa";
+import Footer from "../Components/Footer";
 
 export default function Buyer() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 p-6">
       {/* Header */}
-      <header className="flex items-center justify-between mb-8">
+      <header className="flex flex-row-reverse md:flex-row lg:flex-row items-center justify-between mb-8">
         <div>
           <h2 className="text-3xl font-bold">Buyer Dashboard</h2>
           <p className="text-sm text-gray-600">
@@ -29,7 +30,7 @@ export default function Buyer() {
           to="/dashboard"
           className="text-sm text-gray-600 hover:underline flex items-center gap-2"
         >
-          <FaArrowLeft /> Back to Dashboard
+          <FaArrowLeft /> <span className="hidden lg:inline">Back to Dashboard</span>
         </Link>
       </header>
 
@@ -118,6 +119,7 @@ export default function Buyer() {
           </table>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import Footer from "../Components/Footer";
 
 export default function NotFound() {
   return (
@@ -13,10 +14,7 @@ export default function NotFound() {
             <FaArrowLeft /> Go to Dashboard
           </button>
         </Link>
-        
-        <p className="text-xs text-gray-600">
-          &copy; {new Date().getFullYear()} EBOX | <span>All rights reserved.</span>
-        </p>
+        <Footer />
       </div>
     </div>
   );

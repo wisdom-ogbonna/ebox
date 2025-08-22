@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import EboxzLogo from "../Components/EboxzLogo";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -23,6 +24,7 @@ export default function ProductList() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
+      <EboxzLogo className="w-35 h-15 mb-2 justify-self-center" />
       <h1 className="text-3xl font-bold mb-6">Available Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product) => (
