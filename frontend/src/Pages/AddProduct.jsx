@@ -1,9 +1,9 @@
 // Seller.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import EboxzLogo from "../Components/EboxzLogo";
 
 export default function AddProduct() {
-  const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -11,7 +11,7 @@ export default function AddProduct() {
     price: "",
     stock_quantity: ""
   });
-  const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
   // Fetch products
   useEffect(() => {
@@ -33,13 +33,27 @@ export default function AddProduct() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, image: file });
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/api/products",
-        formData
-      );
+      const data = new FormData();
+      Object.keys(formData).forEach((key) => {
+        data.append(key, formData[key]);
+      });
+
+      const res = await axios.post("http://127.0.0.1:8000/api/products", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       alert(res.data.message);
       setFormData({
         name: "",
@@ -48,6 +62,7 @@ export default function AddProduct() {
         price: "",
         stock_quantity: ""
       });
+      setImagePreview(null);
       fetchProducts();
     } catch (err) {
       console.error("Error creating product:", err);
@@ -56,8 +71,11 @@ export default function AddProduct() {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "700px", margin: "0 auto" }}>
-      <h2>Add Product Dashboard</h2>
+    <div className="p-5 max-w-2xl mx-auto">
+      <div className="flex flex-col items-center m-0.5">
+        <EboxzLogo className="w-52 h-32" />
+      </div>
+      <h2 className="text-2xl font-bold">Add Product Dashboard</h2>
 
       {/* Create Product Form */}
       <form
@@ -76,6 +94,7 @@ export default function AddProduct() {
           name="name"
           placeholder="Product Name"
           value={formData.name}
+          className="border-1 border-black p-2 rounded"
           onChange={handleChange}
           required
         />
@@ -83,22 +102,25 @@ export default function AddProduct() {
           name="description"
           placeholder="Product Description"
           value={formData.description}
+          className="border-1 border-black p-2 rounded"
           onChange={handleChange}
           required
         />
         <select
           name="type"
           value={formData.type}
+          className="border-1 border-black p-2 rounded"
           onChange={handleChange}
         >
-          <option value="physical">Physical</option>
-          <option value="digital">Digital</option>
+          <option className="bg-gray-100" value="physical">Physical</option>
+          <option className="bg-gray-100" value="digital">Digital</option>
         </select>
         <input
           type="number"
           step="0.01"
           name="price"
           placeholder="Price"
+          className="border-1 border-black p-2 rounded"
           value={formData.price}
           onChange={handleChange}
           required
@@ -107,46 +129,47 @@ export default function AddProduct() {
           type="number"
           name="stock_quantity"
           placeholder="Stock Quantity"
+          className="border-1 border-black p-2 rounded"
           value={formData.stock_quantity}
           onChange={handleChange}
           required
         />
-        <button type="submit" style={{ padding: "10px", background: "#000000", color: "#fff", border: "none", borderRadius: "4px" }}>
+        <input
+          type="file"
+          name="image"
+          id="image"
+          accept=".jpg,.jpeg,.png,.gif,.webp,.bmp,.svg"
+          className="border border-black p-2 rounded file:mr-4 file:py-2 file:px-4 
+          file:rounded file:border-0 
+          file:text-white file:bg-black 
+          file:cursor-pointer"
+          onChange={handleImageChange}
+          required
+        />
+
+        {/* Image Preview */}
+        {imagePreview && (
+          <div className="mt-2">
+            <p className="text-sm text-gray-600 mb-3">Image Preview:</p>
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-1 w-40 h-40 justify-self-center object-cover border rounded"
+            />
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="border-1 border-black p-2 rounded bg-black text-white"
+        >
           Add Product
         </button>
       </form>
 
-      {/* Products List */}
-      {loading ? (
-        <p>Loading products...</p>
-      ) : (
-        <div>
-          {products.length === 0 ? (
-            <p>No products available.</p>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {products.map((p) => (
-                <li
-                  key={p.id}
-                  style={{
-                    background: "#fff",
-                    padding: "10px",
-                    marginBottom: "10px",
-                    borderRadius: "6px",
-                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
-                  }}
-                >
-                  <h4>{p.name}</h4>
-                  <p>{p.description}</p>
-                  <p>Type: {p.type}</p>
-                  <p>Price: ${p.price}</p>
-                  <p>Stock: {p.stock_quantity}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <footer>
+        <p className="text-sm text-gray-600">© 2025 E-Boxz. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

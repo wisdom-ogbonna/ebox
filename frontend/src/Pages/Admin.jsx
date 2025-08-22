@@ -6,18 +6,19 @@ import {
   FaArrowLeft,
   FaClipboardCheck,
 } from "react-icons/fa";
+import Footer from "../Components/Footer";
 
 export default function Admin() {
   return (
     <div className="min-h-screen bg-white text-gray-900 p-6">
       {/* Header */}
-      <header className="flex items-center justify-between mb-6">
+      <header className="flex flex-row-reverse md:flex-row lg:flex-row items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold">Super Admin Dashboard</h2>
+          <h2 className="text-2xl font-bold">Admin Dashboard</h2>
           <p className="text-sm text-gray-600">Manage platform, users, and performance analytics.</p>
         </div>
         <Link to="/dashboard" className="text-sm text-gray-600 hover:underline flex items-center gap-2">
-          <FaArrowLeft /> Back to Main Dashboard
+          <FaArrowLeft /> <span className="hidden lg:inline">Back to Main Dashboard</span>
         </Link>
       </header>
 
@@ -101,6 +102,7 @@ export default function Admin() {
           </table>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
