@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Copyright() {
   return (
     <footer className="mt-6">
         <p className="text-sm text-black">

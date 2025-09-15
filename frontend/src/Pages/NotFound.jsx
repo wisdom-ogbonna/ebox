@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import Footer from "../Components/Footer";
+import Copyright from "../Components/Copyright";
 
 export default function NotFound() {
   return (
@@ -14,7 +14,7 @@ export default function NotFound() {
             <FaArrowLeft /> Go to Dashboard
           </button>
         </Link>
-        <Footer />
+        <Copyright />
       </div>
     </div>
   );

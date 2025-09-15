@@ -13,7 +13,7 @@ import {
   FaStar,
   FaGift,
 } from "react-icons/fa";
-import Footer from "../Components/Footer";
+import Copyright from "../Components/Copyright";
 
 export default function Buyer() {
   return (
@@ -119,7 +119,7 @@ export default function Buyer() {
           </table>
         </div>
       </section>
-      <Footer />
+      <Copyright />
     </div>
   );
 }

@@ -13,7 +13,7 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import EboxzLogo from "../Components/EboxzLogo";
-import Footer from "../Components/Footer";
+import Copyright from "../Components/Copyright";
 
 export default function Dashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -114,7 +114,7 @@ export default function Dashboard() {
             </table>
           </div>
         </section>
-        <Footer />
+        <Copyright />
       </main>
     </div>
   );

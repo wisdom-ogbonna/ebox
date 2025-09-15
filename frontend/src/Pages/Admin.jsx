@@ -6,7 +6,7 @@ import {
   FaArrowLeft,
   FaClipboardCheck,
 } from "react-icons/fa";
-import Footer from "../Components/Footer";
+import Copyright from "../Components/Copyright";
 
 export default function Admin() {
   return (
@@ -102,7 +102,7 @@ export default function Admin() {
           </table>
         </div>
       </section>
-      <Footer />
+      <Copyright />
     </div>
   );
 }

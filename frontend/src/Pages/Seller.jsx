@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaPlus, FaClipboardList } from "react-icons/fa";
 import CreateProductModal from "../Components/CreateProductModal";
 import { useProducts } from "../context/ProductsContext";
-import Footer from "../Components/Footer";
+import Copyright from "../Components/Copyright";
 
 export default function Seller() {
   const [showModal, setShowModal] = useState(false);
@@ -53,7 +53,7 @@ export default function Seller() {
           onCreate={addProduct}
         />
       )}*/}
-      <Footer />
+      <Copyright />
     </div>
   );
 }
