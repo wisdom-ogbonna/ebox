@@ -1,6 +1,6 @@
 export default function EboxzLogo({ 
   src = "/eboxz-logo0.png", 
-  alt = "E-BOX Logo", 
+  alt = "EBOXZ Logo", 
   className = "", 
   width, 
   height 
