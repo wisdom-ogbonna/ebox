@@ -17,9 +17,8 @@ export default function LandingContent() {
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white drop-shadow-lg">
           Welcome to <span className="text-cyan-400">Eboxz</span>
         </h1>
-        <p className="mt-4 max-w-2xl text-lg sm:text-xl text-gray-200">
-          Shop smarter, live better. Discover premium products with a seamless
-          experience — from fashion to gadgets — all in one place.
+        <p className="mt-4 max-w-2xl text-md sm:text-xl text-gray-200">
+          The easiest way to create your online store and share your products with the world. Whether you’re selling digital goods or physical items, we help you build a store in minutes—no coding, no stress, just growth.the easiest way to create your online store and share your products with the world. Whether you’re selling digital goods or physical items, we help you build a store in minutes—no coding, no stress, just growth.
         </p>
 
         {/* CTA Buttons */}

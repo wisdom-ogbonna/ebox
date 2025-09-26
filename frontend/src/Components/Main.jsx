@@ -6,11 +6,7 @@ export default function Main() {
       <section className="py-20 px-6 lg:px-20 bg-white text-center">
         <h2 className="text-3xl font-bold mb-6">About Eboxz</h2>
         <p className="max-w-3xl mx-auto text-lg text-gray-600">
-          Eboxz is more than just an e-commerce platform. We are building a
-          digital ecosystem where shopping is effortless, personalized, and
-          secure. Whether it's fashion, electronics, groceries, or lifestyle
-          products, Eboxz connects you to premium choices at the speed of
-          innovation.
+          At Eboxz we believe every entrepreneur deserves the chance to showcase their creativity to a global audience. That’s why we created a platform that empowers anyone—whether a beginner or an experienced seller—to set up a professional online store in just a few clicks. From product management to secure payments, we provide all the tools you need to succeed.
         </p>
       </section>
 
@@ -18,10 +14,7 @@ export default function Main() {
       <section className="py-20 px-6 lg:px-20 bg-gray-100">
         <h2 className="text-3xl font-bold text-center mb-6">Our Mission</h2>
         <p className="max-w-3xl mx-auto text-lg text-gray-700 text-center">
-          To revolutionize the online shopping experience by combining
-          cutting-edge technology, reliable logistics, and a customer-first
-          approach. We aim to deliver not just products, but value, trust, and
-          satisfaction to every customer.
+          To simplify e-commerce by giving entrepreneurs, creators, and businesses of all sizes the power to launch, manage, and grow their online stores effortlessly—reaching customers everywhere.
         </p>
       </section>
 
@@ -29,10 +22,7 @@ export default function Main() {
       <section className="py-20 px-6 lg:px-20 bg-white">
         <h2 className="text-3xl font-bold text-center mb-6">Our Vision</h2>
         <p className="max-w-3xl mx-auto text-lg text-gray-700 text-center">
-          To become Africa’s leading digital commerce hub, empowering businesses
-          and individuals by making shopping and selling accessible to everyone,
-          everywhere. We see a future where Eboxz is the heartbeat of trade and
-          lifestyle innovation.
+          To become the world’s most trusted platform where anyone, anywhere, can turn their ideas into thriving online businesses and connect with a global marketplace.and also driving digital transformation and shaping the future of online trade.
         </p>
       </section>
 
@@ -54,6 +44,27 @@ export default function Main() {
             >
               <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
               <p className="text-gray-600">{value.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      {/* Services */}
+      <section className="py-20 px-6 lg:px-20 bg-gray-100">
+        <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          {[
+            { text: "We provide a seamless platform for creating professional online stores without technical expertise. Sellers can customize their storefronts, upload products, and launch within minutes." },
+            { text: "From e-books and courses to apparel and electronics, we offer tailored solutions for managing both digital downloads and physical inventory, ensuring smooth order fulfillment." },
+            { text: "Our system supports multiple global payment gateways, offering secure transactions and enabling customers to pay conveniently in their preferred currency." },
+            { text: "We provide real-time insights into sales, customer behavior, and inventory, helping businesses make informed decisions and optimize growth." },
+            { text: "Our expert support team is available to assist at every stage, from store setup to scaling operations, ensuring uninterrupted business continuity." },
+          ].map((value, idx) => (
+            <div
+              key={idx}
+              className="p-6 bg-gray-600 rounded-lg shadow hover:shadow-lg transition"
+            >
+              <p className="text-gray-200">{value.text}</p>
             </div>
           ))}
         </div>
