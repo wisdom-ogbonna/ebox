@@ -6,7 +6,7 @@ export default function Main() {
       <section className="py-20 px-6 lg:px-20 bg-white text-center">
         <h2 className="text-3xl font-bold mb-6">About Eboxz</h2>
         <p className="max-w-3xl mx-auto text-lg text-gray-600">
-          At Eboxz we believe every entrepreneur deserves the chance to showcase their creativity to a global audience. That’s why we created a platform that empowers anyone—whether a beginner or an experienced seller—to set up a professional online store in just a few clicks. From product management to secure payments, we provide all the tools you need to succeed.
+          Whether a beginner or an experienced seller—to set up a professional online store in just a few clicks. From product management to secure payments, we provide all the tools you need to succeed.
         </p>
       </section>
 

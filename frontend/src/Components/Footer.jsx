@@ -16,11 +16,11 @@ export default function Footer() {
         <div>
           <h2 className="text-2xl font-bold text-white">Eboxz</h2>
           <p className="mt-4 text-sm lg:text-left text-gray-200">
-            WhatsApp or call : +234 9057319254
+            Call : +234 9057319254
             <br />
             Email: contacteboxz@gmail.com
             <br />
-            Address: Choba Port Harcourt, Rivers State
+            Address: Choba, Port Harcourt, Rivers State
           </p>
         </div>
 
