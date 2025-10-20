@@ -21,7 +21,7 @@ export default function AddProduct() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/products");
+      const res = await axios.get("https://api.eboxz.com/api/products");
       setProducts(res.data.data || []);
     } catch (err) {
       console.error("Error fetching products:", err);

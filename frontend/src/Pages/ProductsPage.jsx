@@ -32,13 +32,20 @@ export default function ProductList() {
             key={product.id}
             className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition"
           >
+            {/* Product Image */}
+            {product.image && (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover rounded-md mb-3"
+              />
+            )}
+
             {/* Product Title */}
             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm mb-4">
-              {product.description}
-            </p>
+            <p className="text-gray-600 text-sm mb-4">{product.description}</p>
 
             {/* Product Info */}
             <div className="flex justify-between items-center mb-3">
@@ -60,9 +67,23 @@ export default function ProductList() {
             </p>
 
             {/* Created date */}
-            <p className="text-xs text-gray-400 mt-2">
-              Added: {new Date(product.created_at).toLocaleDateString()}
-            </p>
+            {product.created_at && (
+              <p className="text-xs text-gray-400 mt-2">
+                Added: {new Date(product.created_at).toLocaleDateString()}
+              </p>
+            )}
+
+            {/* Buy Button */}
+            {product.buy_link && (
+              <a
+                href={product.buy_link} // This should now point to your /buy endpoint
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+              >
+                Buy Now
+              </a>
+            )}
           </div>
         ))}
       </div>
