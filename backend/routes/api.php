@@ -10,6 +10,7 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::get('/products', [ProductController::class, 'index']); // all products
 Route::get('/products/{id}', [ProductController::class, 'show']); // single product
 Route::get('/products/{id}/buy', [ProductController::class, 'buy']);
+Route::post('/verify-email-otp', [AuthController::class, 'verifyEmailOtp']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
