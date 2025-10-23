@@ -9,6 +9,7 @@ import Buyer from './Pages/Buyer';
 import AddProduct from './Pages/AddProduct';
 import NotFound from './Pages/Notfound';
 import Otp from './Pages/Otp';
+import EarningsDashboard from './Pages/EarningsDashboard';
 import ProductsPage from './Pages/ProductsPage';
 import { ProductsProvider } from "./context/ProductsContext";
 
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/earnings" element={<EarningsDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ProductsProvider>
