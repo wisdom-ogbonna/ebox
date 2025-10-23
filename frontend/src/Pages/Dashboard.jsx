@@ -52,7 +52,6 @@ export default function Dashboard() {
         </div>
         <nav className="flex flex-col space-y-1 px-2 mt-4">
           {navLink("/dashboard", <FaTachometerAlt />, "Dashboard", isSidebarOpen)}
-          {navLink("/admin", <FaUserShield />, "Admin Panel", isSidebarOpen)}
           {navLink("/seller", <FaStore />, "Seller Panel", isSidebarOpen)}
           {navLink("/buyer", <FaUsers />, "Buyer Panel", isSidebarOpen)}
           {navLink("/products", <FaBox />, "Products", isSidebarOpen)}
