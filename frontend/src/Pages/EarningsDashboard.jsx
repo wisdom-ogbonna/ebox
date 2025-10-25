@@ -104,15 +104,9 @@ export default function EarningsDashboard() {
           {navLink("/dashboard", <FaTachometerAlt />, "Dashboard")}
           {navLink("/seller", <FaStore />, "Seller Panel")}
           {navLink("/buyer", <FaUsers />, "Buyer Panel")}
-          {navLink("/products", <FaBox />, "Products")}
-          {navLink("/analytics", <FaChartLine />, "Analytics")}
           {navLink("/settings", <FaCog />, "Settings")}
           {navLink("/profile", <FaUserAlt />, "My Profile")}
           {navLink("/earnings", <FaMoneyCheckAlt />, "Earnings")}
-          <button className="flex items-center space-x-3 py-2 px-3 rounded-md text-gray-300 hover:bg-gray-800 hover:text-white transition">
-            <FaSignOutAlt />
-            {isSidebarOpen && <span>Logout</span>}
-          </button>
         </nav>
       </aside>
 
