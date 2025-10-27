@@ -9,9 +9,13 @@ export default function AddProduct() {
     description: "",
     type: "physical",
     price: "",
-    stock_quantity: ""
+    currency: "NGN",
+    stock_quantity: "",
   });
+
   const [imagePreview, setImagePreview] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Fetch products
   useEffect(() => {
@@ -43,7 +47,6 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const data = new FormData();
       Object.keys(formData).forEach((key) => {
@@ -60,7 +63,8 @@ export default function AddProduct() {
         description: "",
         type: "physical",
         price: "",
-        stock_quantity: ""
+        currency: "NGN",
+        stock_quantity: "",
       });
       setImagePreview(null);
       fetchProducts();
@@ -72,103 +76,141 @@ export default function AddProduct() {
 
   return (
     <div className="p-5 max-w-2xl mx-auto">
-      <div className="flex flex-col items-center m-0.5">
+      <div className="flex flex-col items-center mb-3">
         <EboxzLogo className="w-52 h-32" />
       </div>
-      <h2 className="text-2xl font-bold">Add Product Dashboard</h2>
+
+      <h2 className="text-2xl font-bold text-center mb-4">Add Product Dashboard</h2>
 
       {/* Create Product Form */}
       <form
         onSubmit={handleSubmit}
-        style={{
-          display: "grid",
-          gap: "10px",
-          marginBottom: "20px",
-          background: "#f5f5f5",
-          padding: "15px",
-          borderRadius: "8px"
-        }}
+        className="grid gap-4 bg-gray-100 p-5 rounded-lg"
       >
         <input
           type="text"
           name="name"
           placeholder="Product Name"
           value={formData.name}
-          className="border-1 border-black p-2 rounded"
+          className="border border-black p-2 rounded w-full"
           onChange={handleChange}
           required
         />
+
         <textarea
           name="description"
           placeholder="Product Description"
           value={formData.description}
-          className="border-1 border-black p-2 rounded"
+          className="border border-black p-2 rounded w-full"
           onChange={handleChange}
           required
         />
+
         <select
           name="type"
           value={formData.type}
-          className="border-1 border-black p-2 rounded"
+          className="border border-black p-2 rounded w-full"
           onChange={handleChange}
         >
-          <option className="bg-gray-100" value="physical">Physical</option>
-          <option className="bg-gray-100" value="digital">Digital</option>
+          <option value="physical">Physical</option>
+          <option value="digital">Digital</option>
         </select>
-        <input
-          type="number"
-          step="0.01"
-          name="price"
-          placeholder="Price"
-          className="border-1 border-black p-2 rounded"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
+
+        <div className="flex flex-col sm:flex-row">
+          <input
+            type="number"
+            step="0.01"
+            name="price"
+            placeholder="Price"
+            className="border border-black p-2 rounded flex-1 mb-4 sm:mb-0 sm:mr-4"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+
+          <select
+            name="currency"
+            value={formData.currency}
+            onChange={handleChange}
+            className="border border-black p-2 rounded flex-1 sm:max-w-[40%]"
+          >
+            <option value="NGN">Naira (₦)</option>
+            <option value="USD">US Dollar ($)</option>
+            <option value="GBP">British Pound (£)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="GHS">Ghanaian Cedi (₵)</option>
+            <option value="KES">Kenyan Shilling (KSh)</option>
+            <option value="ZAR">South African Rand (R)</option>
+            <option value="XOF">West African CFA Franc (CFA)</option>
+            <option value="XAF">Central African CFA Franc (FCFA)</option>
+            <option value="UGX">Ugandan Shilling (USh)</option>
+            <option value="TZS">Tanzanian Shilling (TSh)</option>
+            <option value="ZMW">Zambian Kwacha (ZK)</option>
+            <option value="MWK">Malawian Kwacha (MK)</option>
+            <option value="RWF">Rwandan Franc (FRw)</option>
+            <option value="SLL">Sierra Leonean Leone (Le)</option>
+            <option value="MZN">Mozambican Metical (MT)</option>
+            <option value="BIF">Burundian Franc (FBu)</option>
+            <option value="GMD">Gambian Dalasi (D)</option>
+            <option value="LRD">Liberian Dollar (L$)</option>
+            <option value="GNF">Guinean Franc (FG)</option>
+            <option value="CVE">Cape Verdean Escudo (CVE$)</option>
+            <option value="STD">Sao Tome and Principe Dobra (Db)</option>
+            <option value="XCD">East Caribbean Dollar (EC$)</option>
+            <option value="SCR">Seychellois Rupee (₨)</option>
+            <option value="NAD">Namibian Dollar (N$)</option>
+            <option value="MAD">Moroccan Dirham (د.م.)</option>
+            <option value="EGP">Egyptian Pound (£)</option>
+            <option value="ETB">Ethiopian Birr (Br)</option>
+            <option value="DZD">Algerian Dinar (دج)</option>
+            <option value="TND">Tunisian Dinar (د.ت)</option>
+          </select>
+        </div>
+
         <input
           type="number"
           name="stock_quantity"
           placeholder="Stock Quantity"
-          className="border-1 border-black p-2 rounded"
+          className="border border-black p-2 rounded w-full"
           value={formData.stock_quantity}
           onChange={handleChange}
           required
         />
+
         <input
           type="file"
           name="image"
-          id="image"
           accept=".jpg,.jpeg,.png,.gif,.webp,.bmp,.svg"
-          className="border border-black p-2 rounded file:mr-4 file:py-2 file:px-4 
-          file:rounded file:border-0 
-          file:text-white file:bg-black 
-          file:cursor-pointer"
+          className="border border-black p-2 rounded file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-white file:bg-black file:cursor-pointer"
           onChange={handleImageChange}
           required
         />
 
         {/* Image Preview */}
         {imagePreview && (
-          <div className="mt-2">
-            <p className="text-sm text-gray-600 mb-3">Image Preview:</p>
+          <div className="mt-2 flex flex-col items-center">
+            <p className="text-sm text-gray-600 mb-2">Image Preview:</p>
             <img
               src={imagePreview}
               alt="Preview"
-              className="mt-1 w-40 h-40 justify-self-center object-cover border rounded"
+              className="w-40 h-40 object-cover border rounded"
             />
           </div>
         )}
 
         <button
           type="submit"
-          className="border-1 border-black p-2 rounded bg-black text-white"
+          disabled={loading}
+          className="border border-black p-2 rounded bg-black text-white hover:bg-gray-800"
         >
-          Add Product
+          {loading ? "Processing..." : "Add Product"}
         </button>
       </form>
 
-      <footer>
-        <p className="text-sm text-gray-600">© 2025 E-Boxz. All rights reserved.</p>
+      <footer className="mt-5 text-center">
+        <p className="text-sm text-gray-600">
+          © 2025 E-Boxz. All rights reserved.
+        </p>
       </footer>
     </div>
   );
