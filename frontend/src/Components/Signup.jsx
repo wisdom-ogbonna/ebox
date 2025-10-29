@@ -52,7 +52,7 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register", {
+      const response = await fetch("https://api.eboxz.com/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,13 +73,18 @@ export default function Signup() {
           data.errors?.password?.[0] || data.message || "Registration failed";
         setError(message);
       } else {
-        setSuccess("Registered successfully!");
+        setSuccess("Registered successfully! Please verify your email.");
+
+        // ✅ Save user_id for OTP verification
+        localStorage.setItem("user_id", data.user?.id || data.user_id);
+
         setName("");
         setEmail("");
         setPassword("");
 
+        // Redirect to OTP page after 1s
         setTimeout(() => {
-          navigate("/dashboard"); 
+          navigate("/otp");
         }, 1000);
       }
     } catch (err) {
@@ -129,7 +134,7 @@ export default function Signup() {
                   className="border-2 border-black rounded-md p-2 text-2xl font-bold w-full"
                   placeholder="Password..."
                   required
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                 />
                 <span
                   className="absolute top-5 right-5 cursor-pointer"
@@ -147,8 +152,9 @@ export default function Signup() {
             <button
               className="border-2 bg-gray-900 hover:bg-black text-white border-gray-200 rounded-md p-2 text-2xl font-bold"
               type="submit"
+              disabled={loading}
             >
-              SIGN UP
+              {loading ? "Signing Up..." : "SIGN UP"}
             </button>
             {success && (
               <div className="text-green-600 text-lg mt-2">{success}</div>

@@ -12,6 +12,8 @@ import Otp from './Pages/Otp';
 import EarningsDashboard from './Pages/EarningsDashboard';
 import ProductsPage from './Pages/ProductsPage';
 import { ProductsProvider } from "./context/ProductsContext";
+import BuyPage from './Pages/BuyPage';
+
 
 export default function App() {
   return (
@@ -26,7 +28,7 @@ export default function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/addproduct" element={<AddProduct />} />
-        <Route path="/earnings" element={<EarningsDashboard />} />
+        <Route path="/product/:id/buy" element={<BuyPage />} /> 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ProductsProvider>

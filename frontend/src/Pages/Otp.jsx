@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EboxzLogo from "../Components/EboxzLogo";
 
 export default function Otp() {
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]); // ✅ 6 digits
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem("user_id"); // ✅ from signup
 
   const handleChange = (value, index) => {
     if (/^[0-9]?$/.test(value)) {
@@ -10,7 +16,6 @@ export default function Otp() {
       newOtp[index] = value;
       setOtp(newOtp);
 
-      // Auto move to next input if digit entered
       if (value && index < otp.length - 1) {
         document.getElementById(`otp-${index + 1}`).focus();
       }
@@ -20,12 +25,10 @@ export default function Otp() {
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace") {
       if (otp[index]) {
-        // clear current digit
         const newOtp = [...otp];
         newOtp[index] = "";
         setOtp(newOtp);
       } else if (index > 0) {
-        // move back if already empty
         document.getElementById(`otp-${index - 1}`).focus();
       }
     }
@@ -39,9 +42,47 @@ export default function Otp() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Entered OTP: " + otp.join(""));
+    const enteredOtp = otp.join("");
+
+    if (enteredOtp.length < 6) {  // ✅ must be 6 now
+      setMessage("⚠️ Please enter the full 6-digit OTP.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+
+      const response = await fetch("https://api.eboxz.com/api/verify-email-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          otp: enteredOtp,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setMessage("✅ " + data.message);
+
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1000);
+      } else {
+        setMessage("❌ " + (data.message || "Invalid OTP"));
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage("❌ Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,14 +98,11 @@ export default function Otp() {
           Enter OTP
         </h1>
         <p className="text-sm text-gray-500 text-center mt-1">
-          We’ve sent a 4-digit code to your email/phone
+          We’ve sent a 6-digit code to your email/phone
         </p>
 
         {/* OTP Inputs */}
-        <form
-          onSubmit={handleSubmit}
-          className="mt-6 flex justify-center gap-3"
-        >
+        <form onSubmit={handleSubmit} className="mt-6 flex justify-center gap-3">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -74,7 +112,7 @@ export default function Otp() {
               value={digit}
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-14 h-14 text-center border-2 border-gray-300 rounded-lg text-xl font-semibold focus:outline-none focus:border-black"
+              className="w-12 h-12 text-center border-2 border-gray-300 rounded-lg text-lg font-semibold focus:outline-none focus:border-black"
             />
           ))}
         </form>
@@ -82,15 +120,26 @@ export default function Otp() {
         {/* Button */}
         <button
           onClick={handleSubmit}
-          className="mt-6 w-full bg-black text-white py-3 rounded-xl hover:bg-gray-900 transition"
+          disabled={loading}
+          className="mt-6 w-full bg-black text-white py-3 rounded-xl hover:bg-gray-900 transition disabled:opacity-60"
         >
-          Verify
+          {loading ? "Verifying..." : "Verify"}
         </button>
+
+        {/* Status Message */}
+        {message && (
+          <p className="text-center mt-4 text-sm font-medium text-gray-700">
+            {message}
+          </p>
+        )}
 
         {/* Resend link */}
         <p className="text-sm text-gray-500 text-center mt-4">
           Didn’t get the code?{" "}
-          <button className="text-black font-medium hover:underline">
+          <button
+            type="button"
+            className="text-black font-medium hover:underline"
+          >
             Resend
           </button>
         </p>
