@@ -25,6 +25,7 @@ export default function App() {
         <Route path="/seller" element={<Seller />} />
         <Route path="/buyer" element={<Buyer />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/earnings" element={<EarningsDashboard />} />
         <Route path="/otp" element={<Otp />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/addproduct" element={<AddProduct />} />

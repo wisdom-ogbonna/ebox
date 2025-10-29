@@ -14,6 +14,7 @@ export default function AddProduct() {
   });
 
   const [imagePreview, setImagePreview] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
