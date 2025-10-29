@@ -1,13 +1,13 @@
-import { useState } from "react";
+//import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaPlus, FaClipboardList } from "react-icons/fa";
+import { FaArrowLeft, FaPlus, FaClipboardList, FaMoneyBillWave } from "react-icons/fa";
 import CreateProductModal from "../Components/CreateProductModal";
-import { useProducts } from "../context/ProductsContext";
-import Footer from "../Components/Footer";
+//import { useProducts } from "../context/ProductsContext";
+import Copyright from "../Components/Copyright";
 
 export default function Seller() {
-  const [showModal, setShowModal] = useState(false);
-  const { products, addProduct } = useProducts();
+  //const [showModal, setShowModal] = useState(false);
+  //const { products, addProduct } = useProducts();
   const navigate = useNavigate();
 
   return (
@@ -44,6 +44,12 @@ export default function Seller() {
           desc="See all products you have added."
           onClick={() => navigate("/products")}
         />
+        <GlassCard
+          icon={<FaMoneyBillWave />}
+          title="Earnings Report"
+          desc="See your total earnings and sales performance."
+          onClick={() => navigate("/earnings")}
+        />
       </section>
 
       {/* Modal */}
@@ -53,7 +59,7 @@ export default function Seller() {
           onCreate={addProduct}
         />
       )}*/}
-      <Footer />
+      <Copyright />
     </div>
   );
 }
