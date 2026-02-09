@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import LandingPage from './Pages/LandingPage';
+import LandingPage from './Homepage/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import Auth from './Pages/Auth';
 import Admin from './Pages/Admin';
