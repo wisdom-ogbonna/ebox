@@ -10,6 +10,8 @@ import {
   FaCog,
   FaSignOutAlt,
   FaUserAlt,
+  FaCashRegister,
+  FaMoneyBillWave,
 } from "react-icons/fa";
 import EboxzLogo from "../Components/EboxzLogo";
 import Copyright from "../Components/Copyright";
@@ -68,6 +70,7 @@ export default function Dashboard() {
           {navLink("/dashboard", <FaTachometerAlt />, "Dashboard")}
           {navLink("/seller", <FaStore />, "Seller Panel")}
           {navLink("/buyer", <FaUsers />, "Buyer Panel")}
+          {navLink("/premium", <FaMoneyBillWave />, "Go Premium")}
           {navLink("/settings", <FaCog />, "Settings")}
           {navLink("/profile", <FaUserAlt />, "My Profile")}
         </nav>
