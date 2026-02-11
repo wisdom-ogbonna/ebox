@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 
 function GetPremium() {
+  const navigate = useNavigate();
   const [features] = useState([
     "Upload Unlimited Products",
     "Upload A Customized Logo",
@@ -23,14 +24,14 @@ function GetPremium() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="py-4 flex flex-row gap-5 w-full border-b border-gray-200 px-5 items-center">
+      <div className="py-4 flex flex-row gap-5 w-full border-b border-gray-200 px-5 items-center cursor-pointer">
         <Link
           to="/dashboard"
-          className="text-gray-600 hover:text-black transition-colors"
+          className="text-gray-600 hover:text-black transition-colors flex flex-row gap-5 justify-center items-center"
         >
           <FaArrowLeft size={18} />
+          <h3 className="text-left font-bold text-xl">Pricing Plan</h3>
         </Link>
-        <h3 className="text-left font-bold text-xl">Pricing Plan</h3>
       </div>
 
       {/* Main Content */}
@@ -81,8 +82,12 @@ function GetPremium() {
 
         {/* Action Button */}
         <div className="mt-auto">
-          <button className="w-full bg-black hover:bg-gray-800 transition-colors font-bold text-white rounded-xl h-14 text-lg shadow-lg">
-            Subscribe to {selectedPlan === 'biannually' ? selectedPlan.slice(0, -2) : selectedPlan} plan
+          <button onClick={() => navigate("/earnings")} className="w-full bg-black hover:bg-gray-800 transition-colors font-bold text-white rounded-xl h-14 text-lg shadow-lg">
+            Subscribe to{" "}
+            {selectedPlan === "biannually"
+              ? selectedPlan.slice(0, -2)
+              : selectedPlan}{" "}
+            plan
           </button>
         </div>
       </div>
